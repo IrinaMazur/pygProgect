@@ -158,17 +158,17 @@ while done == False:
     # движение астероида
     if down:
         if count < 10:
-            a_y += 0.5
+            a_y += 0.25
         elif count < 30:
-            a_y += 0.7
+            a_y += 0.5
         elif count < 60:
-            a_y += 1
+            a_y += 0,75
         elif count < 100:
-            a_y += 1.5
+            a_y += 1
         elif count < 150:
-            a_y += 2
+            a_y += 1,5
         else:
-            a_y += 2.5
+            a_y += 2
         if a_y > 600:
             a_y = 0
             a_x = random.randint(0, 340)
