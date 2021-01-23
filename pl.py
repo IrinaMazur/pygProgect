@@ -4,6 +4,7 @@ import random
 FPS = 50
 
 
+# проверяем столкновение астероида с пулей и кораблём
 def hit(x1, y1, x2, y2, db1, db2):
     if x1 > x2 - db1 and x1 < x2 + db2 and y1 > y2 - db1 and y1 < y2 + db2:
         return 1
@@ -11,6 +12,7 @@ def hit(x1, y1, x2, y2, db1, db2):
         return 0
 
 
+# заставка в начале игры
 def start_screen():
     intro_text = ["               В погоне за звёздами", "",
                   "        Правила игры:",
@@ -20,7 +22,7 @@ def start_screen():
                   "столкновении с астероидом игра",
                   "завершается."]
 
-    fon = pygame.transform.scale(pygame.image.load('bg_st.png'), (400, 600))
+    fon = pygame.transform.scale(pygame.image.load('data\\bg_st.png'), (400, 600))
     screen.blit(fon, (0, 0))
     font = pygame.font.Font(None, 28)
     text_coord = 100
@@ -43,11 +45,12 @@ def start_screen():
         pygame.display.flip()
 
 
+# заставка в конце игры
 def stop_screen():
     intro_text = [" GAME OVER"]
-    fon = pygame.transform.scale(pygame.image.load('bg_st.png'), (400, 600))
+    fon = pygame.transform.scale(pygame.image.load('data\\bg_st.png'), (400, 600))
     screen.blit(fon, (0, 0))
-    font = pygame.font.Font('font.ttf', 70)
+    font = pygame.font.Font('data\\font.ttf', 70)
     text_coord = 150
     for line in intro_text:
         string_rendered = font.render(line, 1, (255, 255, 255))
@@ -83,20 +86,24 @@ player.set_colorkey((0, 0, 0))
 aim.set_colorkey((0, 0, 0))
 bullet.set_colorkey((0, 0, 0))
 
-img_p = pygame.image.load('p.png')
-img_a = pygame.image.load('a3.png')
-img_b = pygame.image.load('b.png')
-img_bg = pygame.image.load('bg.png')
+# загрузка изображений
+img_p = pygame.image.load('data\\p.png')
+img_a = pygame.image.load('data\\a3.png')
+img_b = pygame.image.load('data\\b.png')
+img_bg = pygame.image.load('data\\bg.png')
 
 down = True
 done = False
 
+# координаты игрока
 p_x = 180
 p_y = 500
 
+# координаты астероида
 a_x = random.randint(0, 340)
 a_y = 0
 
+# координаты пули
 b_x = 1000
 b_y = 1000
 strike = False
@@ -139,6 +146,7 @@ while done == False:
             b_x = 1000
             b_y = 1000
 
+    # если столкновение астероида с пулей
     if hit(b_x, b_y, a_x, a_y, 20, 40):
         count += 1
         strike = False
@@ -147,6 +155,7 @@ while done == False:
         a_y = 0
         a_x = random.randint(0, 340)
 
+    # движение астероида
     if down:
         if count < 10:
             a_y += 0.5
@@ -168,6 +177,7 @@ while done == False:
             else:
                 count -= 2
 
+    # если столкновение астероида с игроком
     if hit(p_x, p_y, a_x, a_y, 60, 60):
         count = 0
         strike = False
